@@ -1,26 +1,23 @@
-<table id="ValuationTable">
+<table class="articleUser" id="ValuationTable">
 <thead>
     <th>Name</th>
     <th>ISIN</th>
     <th>Quantity</th>
-
+    <th>Modify</th>
 </thead>
     <tbody>
 {{#blogPosts}}
 <tr>
     <td >{{Name}}</td>
-    <!--<p class="subtitle">Posted on {{date}} by {{author}}</p>-->
     <td >{{ISIN}}</td>
     <td >{{Quantity}}</td>
     <td ><img src='images/delete.png' class='btnDelete'/><img src='images/edit.png' class='btnEdit'/></td>
-
-
 </tr>
 {{/blogPosts}}
     </tbody>
 </table>
 </br>
-<button class="btn btn-default" id="btnAdd" type="button">Add</button>
+<button class="btn btn-default" id="btnAdd" type="button">Add New Asset</button>
 
 
 

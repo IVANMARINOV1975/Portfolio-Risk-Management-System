@@ -36,20 +36,35 @@ a {
     margin-left: 5%;
 
 }
-.articlesUser td,
-.articlesUser th {
+.articleUser td,
+.articleUser th {
     margin-left: 5%;
     border:1px solid black;
 }
-.articlesUser th {font-weight: bold;}
+.articleUser {
+    margin: 1em 0;
+    width: 100%;
+    overflow: hidden;
+    background: #FFF;
+    color: #024457;
+    border-radius: 10px;
+    border: 1px solid #167F92;
+}
+.articleUser th {font-weight: bold;}
 
 #assetvaluation th,
 #assetvaluation td {
     margin-left: 5%;
     border:1px solid black;
 }
-
-
+#lastvaluationdate{
+    font: 25px lato;
+    font-weight: bold;
+}
+#totalvalue{
+    font: 25px lato;
+    font-weight: bold;
+}
 
 .single-post {
     margin-bottom: 5%;

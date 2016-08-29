@@ -32,14 +32,19 @@ class  UserController {
             return;
         }
         delete requestData['confirmPassword'];
+        let _that=this;
         let requestUrl=this._baseServiceUrl;
-        this._requester.post(requestUrl,requestData,
+
+        let header=btoa("kid_BJXUdYMu" + ":" + requestData.appsecret);
+        let registerHeaders={'Authorization':'Basic'+ ' ' +header,'Content-Type': 'application/json'};
+        delete requestData['appsecret'];
+        this._requester.postRegister(requestUrl,registerHeaders,requestData,
             function success(data){
-                showPopup('success',"You are successfully registered.");
+                showPopup('success',"User is successfully registered.");
                 redirectUrl("#/");
             },
             function error(data){
-                showPopup('error',"An error occured while attempting to register.");
+                showPopup('error',"An error occured while attempting to register new User.");
             }
 
         )

@@ -76,7 +76,7 @@ class HomeView{
 
                 let blogPosts={blogPosts:mainData,total:total,lastDate:lastDate};
                 let renderedPosts=Mustache.render(template,blogPosts);
-                $('.articlesUser').html(renderedPosts);
+                $('#articleUser').html(renderedPosts);
 
 
 
@@ -153,15 +153,13 @@ class HomeView{
 
                 $(".btnEdit").on('click',function (ev) {
                     let td= $(this).parent().parent();
-                    let tdName = td.children("td:nth-child(1)");
-                    let tdISIN = td.children("td:nth-child(2)");
+
                     let tdQuantity = td.children("td:nth-child(3)");
                     let tdButtons = td.children("td:nth-child(4)");
 
-                    tdName.html("<input type='text' id='txtName' value='"+tdName.html()+"'/>");
-                    tdISIN.html("<input type='text' id='txtPhone' value='"+tdISIN.html()+"'/>");
+
                     tdQuantity.html("<input type='text' id='txtEmail' value='"+tdQuantity.html()+"'/>");
-                    tdButtons.html("<img src='images/disk.png' class='btnSave1'/>");
+                    tdButtons.html("<img src='images/save.png' class='btnSave1'/>");
 
                     $(".btnSave1").on("click", function (ev) {
                         let td= $(this).parent().parent();

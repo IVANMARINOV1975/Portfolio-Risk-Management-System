@@ -26,11 +26,11 @@ class PostView {
                 $("#title").val(date);
 
                 $("#create-new-post-request-button").on('click',function (ev) {
-                    // let title=$("#title").val();
-                    // let author=$("#author").val();
-                    let content=$("#content").val();
-                    // let date=moment().format('MMMM Do YYYY')
-                    let data=JSON.parse(content);
+                    let stringContent='{"AssetPrices":'+$("#content").val()+'}';
+
+                    let data=JSON.parse(stringContent);
+                   
+                    
                     triggerEvent('createPost',data);
                 })
             })

@@ -12,7 +12,10 @@ class Requester {
         let requestHeaders = this._getHeaders(false);
         this._makeRequest('POST', url, data, requestHeaders, successCallback, errorCallback);
     }
+    postRegister(url, requestHeaders, data, successCallback, errorCallback) {
 
+        this._makeRequest('POST', url, data, requestHeaders, successCallback, errorCallback);
+    }
     put(url, data, successCallback, errorCallback) {
         let requestHeaders = this._getHeaders(false);
         this._makeRequest('PUT', url, data, requestHeaders, successCallback, errorCallback);
@@ -51,9 +54,13 @@ class Requester {
         return headers;
     }
     _getHeadersDelete(isGuest) {
-        let headers = this.authorizationService.getAuthorizationHeadersDelete(isGuest);
-        return headers;
+    let headers = this.authorizationService.getAuthorizationHeadersDelete(isGuest);
+    return headers;
     }
+
+
+
+
 }
 
 let _guestCredentials;
@@ -112,6 +119,11 @@ class AuthorizationService {
             return headers;
         }
     }
+
+
+
+
+
 }
 
  function showPopup(type, text, position) {

@@ -11,6 +11,7 @@
     //Create AuthorizationService and Requester
 
     let selector = ".wrapper";
+    
     let mainContentSelector = ".main-content";
 
     let authService=new AuthorizationService(baseUrl,appKey,appSecret,_guestCredentials);

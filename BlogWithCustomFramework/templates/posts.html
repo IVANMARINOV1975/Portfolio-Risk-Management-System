@@ -1,24 +1,26 @@
-<p>Valuation on {{lastDate}}</p>
-<tr>
+<p id="lastvaluationdate">Last Valuation on {{lastDate}}</p>
+<table class="articleUser">
+<thead>
     <th>Name</th>
     <th>Quantity</th>
     <th>Price</th>
     <th>Value</th>
-</tr>
+</thead>
+<tbody>
 {{#blogPosts}}
-       <tr>
-           <td >{{Name}}</td>
-        <!--<p class="subtitle">Posted on {{date}} by {{author}}</p>-->
-           <td >{{Quantity}}</td>
-           <td >{{Price}}</td>
 
-           <td >{{Value}}</td>
-
-      </tr>
-{{/blogPosts}}
 <tr>
-    <th>Total:</th>
-    <th></th>
-    <th></th>
-    <th>{{total}}</th>
+   <td >{{Name}}</td>
+   <td >{{Quantity}}</td>
+   <td >{{Price}}</td>
+   <td >{{Value}}</td>
 </tr>
+{{/blogPosts}}
+</tbody>
+<tr>
+    <td></td>
+    <td></td>
+    <td id="totalvalue">Total:</td>
+    <td>{{total}}</td>
+</tr>
+</table>

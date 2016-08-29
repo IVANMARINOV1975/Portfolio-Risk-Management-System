@@ -63,20 +63,21 @@ class UserView{
                 $("#register-request-button").on('click',function (ev) {
                     let username=$("#username").val();
                     let fullname=$("#full-name").val();
-                    let isadmin=$("#is-admin").val();
                     let password=$("#password").val();
                     let confirmPassword=$("#pass-confirm").val();
+                    let isadmin=$("#is-admin").val();
+                    let appsecret=$("#app-secret").val();
 
                     let data={
                         username:username,
                         fullname:fullname,
-                        isadmin:isadmin,
                         password:password,
-                        confirmPassword:confirmPassword
-
+                        confirmPassword:confirmPassword,
+                        isadmin:isadmin,
+                        appsecret:appsecret
 
                     };
-                    triggerEvent('register',data);
+                    triggerEvent('register',data,appsecret);
                 })
             })
 

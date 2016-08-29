@@ -40,24 +40,26 @@ class  HomeController{
         let recentPosts=[];
         let requestUrl=this._baseServiceUrl+"/appdata/"+this._appKey+"/equites";
         let requestUrlPrices=this._baseServiceUrl+"/appdata/"+this._appKey+"/prices";
+        let requestUrlArchieve=this._baseServiceUrl+"/appdata/"+this._appKey+"/archieve"
 
         this._requester.get(requestUrl,
             function success(data){
 
-                data.sort(function(elem1,elem2){
-                    let date1=new Date(elem1._kmd.ect);
-                    let date2=new Date(elem2._kmd.ect);
-                    return date2-date1;
-                })
-
-                let currentId=1;
-
-                for(let i=0;i<data.length && i<5;i++){
-                    data[i].postId=currentId;
-                    currentId++;
-                    recentPosts.push(data[i]);
-                }
+                // data.sort(function(elem1,elem2){
+                //     let date1=new Date(elem1._kmd.ect);
+                //     let date2=new Date(elem2._kmd.ect);
+                //     return date2-date1;
+                // })
+                //
+                // let currentId=1;
+                //
+                // for(let i=0;i<data.length && i<5;i++){
+                //     data[i].postId=currentId;
+                //     currentId++;
+                //     recentPosts.push(data[i]);
+                // }
                 let valuation;
+                let arr=[];
                 _that._requester.get(requestUrlPrices,
                     function success(dataPrices){
                         let total=0;let lastDate=dataPrices[0].AssetPrices[0].Date;
@@ -66,12 +68,26 @@ class  HomeController{
                                 if(data[i].ISIN===dataPrices[0].AssetPrices[j].ISIN){
                                     valuation=data[i].Quantity*dataPrices[0].AssetPrices[j].Price;
                                     data[i].Value=Math.round(valuation*100)/100;data[i].Price=dataPrices[0].AssetPrices[j].Price;
+
+                                    arr.push(data);
+
                                     total=total+data[i].Value;break;
                                 }
                             }
                         }
+                       let newobj={Date:lastDate,Valuation:arr};
 
-                        _that._homeView.showUserPage_(data,total,lastDate);
+                        _that._requester.post(requestUrlArchieve,newobj,
+                            function success(data){
+                            showPopup('success',"ok!");
+                                 _that._homeView.showUserPage_(newobj,total,lastDate);
+                            },
+
+                            function error(data){
+                            showPopup('error',"Error loading achieve!");
+                            }
+                         );
+
                     }
                     ,
                     function error(dataPrices){
