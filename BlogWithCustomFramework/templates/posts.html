@@ -1,7 +1,11 @@
-<p id="lastvaluationdate">Last Valuation on {{lastDate}}</p>
+<header class="blog-title">
+    <h3>{{title}}</h3>
+</header>
+<p id="lastvaluationdate"> Valuation on {{lastDate}}</p>
 <table class="articleUser">
 <thead>
     <th>Name</th>
+    <th>ISIN</th>
     <th>Quantity</th>
     <th>Price</th>
     <th>Value</th>
@@ -11,6 +15,7 @@
 
 <tr>
    <td >{{Name}}</td>
+    <td >{{ISIN}}</td>
    <td >{{Quantity}}</td>
    <td >{{Price}}</td>
    <td >{{Value}}</td>
@@ -20,7 +25,9 @@
 <tr>
     <td></td>
     <td></td>
+    <td></td>
     <td id="totalvalue">Total:</td>
     <td>{{total}}</td>
 </tr>
 </table>
+

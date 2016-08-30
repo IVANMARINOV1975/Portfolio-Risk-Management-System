@@ -28,7 +28,7 @@ class HomeView{
         let _that=this;
         
 
-            let templateUrl="templates/form-user-valuation.html";
+            let templateUrl="templates/form-user-arcieve.html";
      
         $.get(templateUrl,function (template) {
 
@@ -53,12 +53,14 @@ class HomeView{
 
     }
 
-    showUserPage(mainData,total,lastDate){
+    showUserPage(mainData,total,lastDate,title){
         let _that=this;
         let templateUrl;
+
         
         if(sessionStorage['is-admin']==="Yes"){
             templateUrl="templates/welcome-admin-user.html";
+
         }
         else{
             templateUrl="templates/welcome-user.html";
@@ -74,7 +76,7 @@ class HomeView{
             $.get('templates/posts.html',function (template) {
 
 
-                let blogPosts={blogPosts:mainData,total:total,lastDate:lastDate};
+                let blogPosts={blogPosts:mainData,total:total,lastDate:lastDate,title:title};
                 let renderedPosts=Mustache.render(template,blogPosts);
                 $('#articleUser').html(renderedPosts);
 
@@ -195,4 +197,44 @@ class HomeView{
 
         })
     }
+    showArchieveDates(){
+        let _that=this;
+
+
+        let templateUrl="templates/form-user-archieve.html";
+
+        $.get(templateUrl,function (template) {
+
+            let renderedWrapper=Mustache.render(template,null);
+            $(_that._wrapperSelector).html(renderedWrapper);
+
+
+
+            $.get('templates/archieve-dates.html',function (template) {
+
+
+                
+                let renderedPosts=Mustache.render(template,null);
+                $('#assetvaluation').html(renderedPosts);
+
+                $("#getvaluation").on("click", function (ev) {
+
+                        var dateVal = $("#dates").val();
+                        alert("Your typed in " + dateVal);
+                        dateVal=moment(dateVal,"YYYY-MM-DD").format("DD.MM.YYYY");
+                    triggerEvent('TakeAssetsFromArchieve',dateVal);
+
+
+
+                })
+
+
+            });
+
+        });
+    }
+
+    
+
+
 }

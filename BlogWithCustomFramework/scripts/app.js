@@ -80,6 +80,11 @@
 
         homeController.showUserPage_();
     });
+    onRoute('#/archieve', function () {
+        // Show the new post page...
+
+        homeController.showArchieveDates();
+    });
     bindEventHandler('login', function (ev, data) {
         // Login the user...
         userController.login(data);
@@ -106,7 +111,10 @@
         // Create a new post...
         assetController.editNewAsset(data);
     });
-    
+    bindEventHandler('TakeAssetsFromArchieve', function (ev, data) {
+        // Create a new post...
+        homeController.takeAssets(data);
+    });
     
     run('#/');
 })();
