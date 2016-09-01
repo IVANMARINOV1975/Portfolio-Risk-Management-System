@@ -9,13 +9,10 @@ class UserView{
     showLoginPage(isLoggedIn){
 
         let _that=this;
-        let templateUrl;
-        if(isLoggedIn){
-            templateUrl="templates/form-user.html";
-        }
-        else{
-            templateUrl="templates/form-guest.html";
-        }
+
+
+        let  templateUrl="templates/form-guest.html";
+
 
         $.get(templateUrl,function (template){
              let renderedWrapper=Mustache.render(template,null);
@@ -45,6 +42,9 @@ class UserView{
 
         if(isLoggedIn){
             templateUrl="templates/welcome-admin-user.html";
+        }
+        else{
+            templateUrl="templates/form-guest.html";
         }
 
         $.get(templateUrl,function (template){
