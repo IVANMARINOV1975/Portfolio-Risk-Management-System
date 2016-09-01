@@ -1,11 +1,11 @@
-class PostView {
+class PriceView {
 
     constructor(wrapperSelector, mainContentSelector) {
         this._wrapperSelector = wrapperSelector;
         this._mainContentSelector = mainContentSelector;
     }
 
-    showCreatePostPage(data,isLoggedIn){
+    showCreatePricePage(data,isLoggedIn){
         let _that=this;
         let templateUrl;
         if(isLoggedIn){
@@ -17,7 +17,7 @@ class PostView {
         $.get(templateUrl,function (template){
             let renderedWrapper=Mustache.render(template,null);
             $(_that._wrapperSelector).html(renderedWrapper);
-            $.get('templates/create-post.html',function (template) {
+            $.get('templates/prices.html',function (template) {
                 let rendered=Mustache.render(template,null);
                 $(_that._mainContentSelector).html(rendered);
 
@@ -26,12 +26,14 @@ class PostView {
                 $("#title").val(date);
 
                 $("#create-new-post-request-button").on('click',function (ev) {
-                    let stringContent='{"AssetPrices":'+$("#content").val()+'}';
-
-                    let data=JSON.parse(stringContent);
+                    let stringContent = '{"AssetPrices":' + $("#content").val() + '}';
+                    try {
+                        var datajson=JSON.parse(stringContent);
+                    }
+                    catch(e){alert("Problem with content.No content or not a JSON!");throw new Error("Problem with content!")}
                    
                     
-                    triggerEvent('createPost',data);
+                    triggerEvent('createPrice',datajson);
                 })
             })
 

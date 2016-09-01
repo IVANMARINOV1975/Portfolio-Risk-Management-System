@@ -1,92 +1,10 @@
-'use strict'
 
-class HomeView{
-
-    constructor(wrapperSelector,mainContentSelector){
-        this._wrapperSelector=wrapperSelector;
-        this._mainContentSelector=mainContentSelector;
-    }
-
-    showGuestPage(){
-        let _that=this;
-
-        $.get('templates/welcome-guest.html',function (template) {
-
-            let renderedWrapper=Mustache.render(template,null);
-            $(_that._wrapperSelector).html(renderedWrapper);
-
-            
-            
-        });
-
-        
+class AssetView {
 
 
-    }
-
-    showUserPage_(mainData,total,lastDate){
-        let _that=this;
-        
-
-            let templateUrl="templates/form-user-arcieve.html";
-     
-        $.get(templateUrl,function (template) {
-
-            let renderedWrapper=Mustache.render(template,null);
-            $(_that._wrapperSelector).html(renderedWrapper);
-
-
-
-            $.get('templates/posts.html',function (template) {
-
-
-                let blogPosts={blogPosts:mainData,total:total,lastDate:lastDate};
-                let renderedPosts=Mustache.render(template,blogPosts);
-                $('#assetvaluation').html(renderedPosts);
-
-
-
-            });
-
-        });
-
-
-    }
-
-    showUserPage(mainData,total,lastDate,title){
-        let _that=this;
-        let templateUrl;
-
-        
-        if(sessionStorage['is-admin']==="Yes"){
-            templateUrl="templates/welcome-admin-user.html";
-
-        }
-        else{
-            templateUrl="templates/welcome-user.html";
-        }
-
-        $.get(templateUrl,function (template) {
-
-            let renderedWrapper=Mustache.render(template,null);
-            $(_that._wrapperSelector).html(renderedWrapper);
-
-           
-
-            $.get('templates/posts.html',function (template) {
-
-
-                let blogPosts={blogPosts:mainData,total:total,lastDate:lastDate,title:title};
-                let renderedPosts=Mustache.render(template,blogPosts);
-                $('#articleUser').html(renderedPosts);
-
-
-
-            });
-
-        });
-
-
+    constructor(wrapperSelector, mainContentSelector) {
+        this._wrapperSelector = wrapperSelector;
+        this._mainContentSelector = mainContentSelector;
     }
 
     showUserPageAssets(mainData){
@@ -147,10 +65,10 @@ class HomeView{
 
                 })
                 $(".btnDelete").on('click',function (ev) {
-                let par= $(this).parent().parent();
-                let isin=par.children("td:nth-child(2)").html();
+                    let par= $(this).parent().parent();
+                    let isin=par.children("td:nth-child(2)").html();
 
-                triggerEvent('deleteAsset',isin);
+                    triggerEvent('deleteAsset',isin);
                 });
 
                 $(".btnEdit").on('click',function (ev) {
@@ -179,11 +97,11 @@ class HomeView{
                             Name:$(tdName).html(),
                             ISIN:$(tdISIN).html(),
                             Quantity:parseInt($(tdQuantity).html())
-                            
+
                         }
                         let id;
                         for(let i=0;i<mainData.length;i++){
-                           if(mainData[i].ISIN===data.ISIN){id=mainData[i]._id;break;}
+                            if(mainData[i].ISIN===data.ISIN){id=mainData[i]._id;break;}
                         }
                         data._id=id;
                         triggerEvent('EditNewAsset',data);
@@ -197,44 +115,5 @@ class HomeView{
 
         })
     }
-    showArchieveDates(){
-        let _that=this;
-
-
-        let templateUrl="templates/form-user-archieve.html";
-
-        $.get(templateUrl,function (template) {
-
-            let renderedWrapper=Mustache.render(template,null);
-            $(_that._wrapperSelector).html(renderedWrapper);
-
-
-
-            $.get('templates/archieve-dates.html',function (template) {
-
-
-                
-                let renderedPosts=Mustache.render(template,null);
-                $('#assetvaluation').html(renderedPosts);
-
-                $("#getvaluation").on("click", function (ev) {
-
-                        var dateVal = $("#dates").val();
-                        alert("Your typed in " + dateVal);
-                        dateVal=moment(dateVal,"YYYY-MM-DD").format("DD.MM.YYYY");
-                    triggerEvent('TakeAssetsFromArchieve',dateVal);
-
-
-
-                })
-
-
-            });
-
-        });
-    }
-
-    
-
 
 }

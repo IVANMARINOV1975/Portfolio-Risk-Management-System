@@ -10,6 +10,22 @@ class  AssetController {
 
 
     }
+    showUserPageAssets(){
+        
+        let _that=this;
+        
+        let requestUrl=this._baseServiceUrl;
+        
+        this._requester.get(requestUrl,
+            function success(data){
+                _that._assetView.showUserPageAssets(data);
+            },
+            function error(dataPrices){
+                showPopup('error',"Error loading prices!");
+            }
+        )
+
+    }
     deleteAsset(isin){
         let requestUrl=this._baseServiceUrl+`?query={"ISIN":"${isin}"}`;
 
@@ -33,10 +49,21 @@ class  AssetController {
             },
             function error(data){
                 showPopup('error',"An error occured while attempting to update Prices table.");
-            }
+            })
+    }
 
-        )}
-
-
+    
+    
+    saveNewAsset(data){
+        let requestUrl=this._baseServiceUrl+"/appdata/"+this._appKey+"/equites";
+        this._requester.post(requestUrl,data,
+            function success(data){
+                showPopup('success',"Asset  was successfully added.");
+                redirectUrl("#/valuation/edit/assets");
+            },
+            function error(data){
+                showPopup('error',"Asset  wasn't  added.");
+            })
+    };
 
 }

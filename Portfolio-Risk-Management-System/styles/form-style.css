@@ -37,7 +37,10 @@ input {
     margin: 0 auto 10px;
     text-align: center;
 }
-
+#dates{
+    width:30%;
+}
+S
 input:focus {
     font: 12px Lato;
     font-weight: 100;

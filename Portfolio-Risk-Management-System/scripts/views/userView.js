@@ -7,6 +7,7 @@ class UserView{
     }
 
     showLoginPage(isLoggedIn){
+
         let _that=this;
         let templateUrl;
         if(isLoggedIn){
@@ -25,33 +26,25 @@ class UserView{
                  $("#login-request-button").on('click',function (ev) {
                      let username=$("#username").val();
                      let password=$("#password").val();
+                     let appsecret=$("#app-secret").val();
                      let data={
                          username:username,
-                         password:password
+                         password:password,
+                         appsecret:appsecret
                      };
                      triggerEvent('login',data);
                  })
              })
-
-         })
-
-
-        }
-
-
-
-
-
-
+        })
+    }
 
     showRegisterPage(isLoggedIn){
+
         let _that=this;
         let templateUrl;
+
         if(isLoggedIn){
-            templateUrl="templates/form-user.html";
-        }
-        else{
-            templateUrl="templates/form-guest.html";
+            templateUrl="templates/welcome-admin-user.html";
         }
 
         $.get(templateUrl,function (template){
@@ -75,15 +68,12 @@ class UserView{
                         confirmPassword:confirmPassword,
                         isadmin:isadmin,
                         appsecret:appsecret
-
                     };
-                    triggerEvent('register',data,appsecret);
+                    triggerEvent('register',data);
                 })
             })
 
         })
-
-
     }
 
 }
