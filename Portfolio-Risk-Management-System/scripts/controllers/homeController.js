@@ -24,13 +24,13 @@ class  HomeController{
             function success(data){
 
                 data.sort(function(elem1,elem2){
-                    let date1=moment(elem1.valuation.Date,"DD.MM.YYYY");
-                    let date2=moment(elem2.valuation.Date,"DD.MM.YYYY");
+                    let date1=moment(elem1.Date,"DD.MM.YYYY");
+                    let date2=moment(elem2.Date,"DD.MM.YYYY");
                     return date1-date2;
                 })
                 
-                let lastData=data[data.length-1].valuation.Valuation;
-                let lastDate=data[data.length-1].valuation.Date;
+                let lastData=data[data.length-1].Valuation;
+                let lastDate=data[data.length-1].Date;
                 let total=0;
                 
                 for(let i=0;i<lastData.length;i++){
@@ -55,7 +55,7 @@ class  HomeController{
         let recentPosts=[];
         let requestUrl=this._baseServiceUrl+"/appdata/"+this._appKey+"/equites";
         let requestUrlPrices=this._baseServiceUrl+"/appdata/"+this._appKey+"/prices";
-        let requestUrlArchieve=this._baseServiceUrl+"/appdata/"+this._appKey+"/archieve"
+        let requestUrlArchieve=this._baseServiceUrl+"/appdata/"+this._appKey+"/archieve/";
 
         this._requester.get(requestUrl,
 
@@ -87,18 +87,43 @@ class  HomeController{
 
                         
                         let newobj={};
-                        newobj.valuation={Date:lastDate,Valuation:arr};
+                        newobj.Date=lastDate;
+                        newobj.Valuation=arr;
 
-                        _that._requester.post(requestUrlArchieve,newobj,
-                            function success(data){
+                        let requestArchieveId=_that._baseServiceUrl+"/appdata/"+_that._appKey+ '/archieve/?query={"Date":'+ '"'+ newobj.Date +'"' +"}";
+                        _that._requester.get(requestArchieveId,
+                            function success(data) {
+                                if(data.length===0) {
 
-                                _that._homeView.showUserPage(newobj.valuation.Valuation,total,lastDate,"Valuation");
+                                    _that._requester.post(requestUrlArchieve, newobj,
+                                        function success(data) {
+                                            _that._homeView.showUserPage(newobj.Valuation, total, lastDate, "Valuation");
+                                        },
+                                        function error(data) {
+                                            showPopup('error', "Error loading achieve!");
+                                        }
+                                    );
+                                }
+                                else{
+                                    requestUrlArchieve=requestUrlArchieve+data[0]._id
+                                    _that._requester.put(requestUrlArchieve, newobj,
+                                        function success(data) {
+                                            _that._homeView.showUserPage(newobj.Valuation, total, lastDate, "Valuation");
+                                        },
+                                        function error(data) {
+                                            showPopup('error', "Error loading achieve!");
+                                        }
+                                    );
+
+
+
+                                }
+
                             },
-
                             function error(data){
-                                showPopup('error',"Error loading achieve!");
+                                showPopup('error',"Assets  weren't  find.");
                             }
-                        );
+                        )
 
                     }
                     ,
@@ -133,23 +158,21 @@ class  HomeController{
     }
     takeAssets(dateVal){
         let _that=this;
-        let requestUrl=this._baseServiceUrl+"/appdata/"+this._appKey+"/archieve";
+        let requestUrl=this._baseServiceUrl+"/appdata/"+this._appKey+ '/archieve/?query={"Date":'+ '"'+ dateVal +'"' +"}";
+
         this._requester.get(requestUrl,
-            function success(data){
+            function success(data) {
                 let total=0;
-               for(let i=0;i<data.length-1;i++){
-                   if(data[i].valuation.Date===dateVal){
-                       for(let j=0;j<data[i].valuation.Valuation.length;j++){
-                           total=total+ data[i].valuation.Valuation[j].Value;
-                       }
-                       
-                       _that._homeView.showUserPage(data[i].valuation.Valuation, total,dateVal,"Assets by Date");break;
+                   for(let i=0;i<data[0].Valuation.length;i++){
+                       total=total+ data[0].Valuation[i].Value;
                    }
-               }
+
+                _that._homeView.showUserPage(data[0].Valuation, total,dateVal,"Assets by Date")
             },
-            function error(data){
-                showPopup('error',"Assets  weren't  find.");
-            })
+             function error(data){
+                 showPopup('error',"Assets  weren't  find.");
+             }
+        )
 
     }
 

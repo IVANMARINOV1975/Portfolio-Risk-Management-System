@@ -55,7 +55,7 @@ class  AssetController {
     
     
     saveNewAsset(data){
-        let requestUrl=this._baseServiceUrl+"/appdata/"+this._appKey+"/equites";
+        let requestUrl=this._baseServiceUrl;
         this._requester.post(requestUrl,data,
             function success(data){
                 showPopup('success',"Asset  was successfully added.");
