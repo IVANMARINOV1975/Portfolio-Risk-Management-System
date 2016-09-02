@@ -17,7 +17,7 @@ class  UserController {
     }
     
     login(requestData){
-        
+
         let requestUrl=this._baseServiceUrl+"login";
         let header=btoa("kid_BJXUdYMu" + ":" + requestData.appsecret);
         let requestHeaders={'Authorization':'Basic'+ ' ' +header,'Content-Type': 'application/json'};
@@ -65,12 +65,20 @@ class  UserController {
         
         let header=btoa("kid_BJXUdYMu" + ":" + requestData.appsecret);
         let registerHeaders={'Authorization':'Basic'+ ' ' +header,'Content-Type': 'application/json'};
+        let loginData={
+            username:requestData.username,
+            password:requestData.password,
+            appsecret:requestData.appsecret
+        };
         delete requestData['appsecret'];
 
+        
         this._requester.postRegister(requestUrl,registerHeaders,requestData,
             function success(data){
                 showPopup('success',"User is successfully registered.");
-                redirectUrl("#/");
+
+                _that.login(loginData);
+                // redirectUrl("#/");
             },
             function error(data){
                 showPopup('error',"An error occured while attempting to register new User.");
